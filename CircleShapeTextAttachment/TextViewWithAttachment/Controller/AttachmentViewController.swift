@@ -12,6 +12,7 @@ class AttachmentViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
     
     var shapeListItem: ShapeListItem?
+    var attachmentInfo: AttachmentInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             if let item = shapeListItem {
-                cell.addTextAttachment(text: Constants.defaultTextViewText, count: "12", shape: item.type)
+                cell.addTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
             }
             
             return  cell

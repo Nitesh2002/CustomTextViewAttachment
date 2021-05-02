@@ -49,15 +49,15 @@ class AttachmentCell: UITableViewCell {
     
     func addTextAttachment(text: String, count:String, shape:Shape) {
         
-        if text.contains(count) {
-            
+        if let range = text.range(of: count) {
             let replacingText = count + Constants.doubleWhiteSpace
             attachmentLabel.accessibilityLabel = Constants.empty
             attachmentLabel.text = replacingText
             
-            let displaytext = text.replacingOccurrences(of: count, with: replacingText)
-            titleTextView.addShapeLabelTextAttachment(text: displaytext, label: attachmentLabel, shapeType: shape)
+            let displaytext = text.replacingCharacters(in: range,
+                                                       with: replacingText)
             
+            titleTextView.addShapeLabelTextAttachment(text: displaytext, label: attachmentLabel, shapeType: shape)
         } else {
             
             titleTextView.text = text

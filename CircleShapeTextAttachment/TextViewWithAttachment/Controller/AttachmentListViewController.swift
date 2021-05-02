@@ -67,17 +67,16 @@ extension AttachmentListViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shapeList = rows[indexPath.row].shapeList
         if shapeList.count > .zero {
-            showActionSheet(title: Constants.attachment, message: Constants.actionSheetOption, options: shapeList)
+            showActionSheet(title: Constants.actionSheetTitle, message: Constants.actionSheetOption, options: shapeList)
         } else {
             navigateToAttachment()
         }
-        
     }
 }
 
 extension AttachmentListViewController {
     private func navigateToAttachment(_ item: ShapeListItem? = nil) {
-        guard let attachmentVC: AttachmentViewController = storyboard?.instantiateVC() else {
+        guard let attachmentVC: AttachmentEntryViewController = storyboard?.instantiateVC() else {
             preconditionFailure(Constants.controlleDidNotFound)
         }
         
@@ -94,10 +93,10 @@ extension AttachmentListViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
-        for item in options {
-            let optionAction = UIAlertAction(title:item.name, style: .default, handler: { (alert: UIAlertAction!) -> Void in
-                self.selectedShpaeListItem = item
-                self.navigateToAttachment(item)
+        for option in options {
+            let optionAction = UIAlertAction(title:option.name, style: .default, handler: { (alert: UIAlertAction!) -> Void in
+                self.selectedShpaeListItem = option
+                self.navigateToAttachment(option)
             })
             alertController.addAction(optionAction)
         }

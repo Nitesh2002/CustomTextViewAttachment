@@ -10,6 +10,7 @@
 		6D5D9CDD263D8B58005446A3 /* AttachmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D9CDC263D8B58005446A3 /* AttachmentListViewController.swift */; };
 		6D5D9CE2263D8EFC005446A3 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D9CE1263D8EFC005446A3 /* ListTableViewCell.swift */; };
 		6D5D9CE8263D902B005446A3 /* StaticData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D9CE7263D902B005446A3 /* StaticData.swift */; };
+		6D6F2381263ECC1B0056CDA5 /* AttachmentEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6F2380263ECC1B0056CDA5 /* AttachmentEntryViewController.swift */; };
 		986A9EBE25D2870E00A70781 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A9EBD25D2870E00A70781 /* AppDelegate.swift */; };
 		986A9EC025D2870E00A70781 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A9EBF25D2870E00A70781 /* SceneDelegate.swift */; };
 		986A9EC225D2870E00A70781 /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A9EC125D2870E00A70781 /* AttachmentViewController.swift */; };
@@ -48,6 +49,7 @@
 		6D5D9CDC263D8B58005446A3 /* AttachmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListViewController.swift; sourceTree = "<group>"; };
 		6D5D9CE1263D8EFC005446A3 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		6D5D9CE7263D902B005446A3 /* StaticData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticData.swift; sourceTree = "<group>"; };
+		6D6F2380263ECC1B0056CDA5 /* AttachmentEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentEntryViewController.swift; sourceTree = "<group>"; };
 		986A9EBA25D2870E00A70781 /* TextViewWithAttachment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextViewWithAttachment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		986A9EBD25D2870E00A70781 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		986A9EBF25D2870E00A70781 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				986A9EC125D2870E00A70781 /* AttachmentViewController.swift */,
 				6D5D9CDC263D8B58005446A3 /* AttachmentListViewController.swift */,
+				6D6F2380263ECC1B0056CDA5 /* AttachmentEntryViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				986A9EFD25D287A700A70781 /* AttachmentCell.swift in Sources */,
 				986A9EBE25D2870E00A70781 /* AppDelegate.swift in Sources */,
 				986A9F3925D28F0F00A70781 /* UI+FoundationExtensions.swift in Sources */,
+				6D6F2381263ECC1B0056CDA5 /* AttachmentEntryViewController.swift in Sources */,
 				986A9EC025D2870E00A70781 /* SceneDelegate.swift in Sources */,
 				6D5D9CDD263D8B58005446A3 /* AttachmentListViewController.swift in Sources */,
 			);

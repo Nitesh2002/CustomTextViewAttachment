@@ -61,6 +61,7 @@ extension AttachmentTextView {
             let y = (label.font.capHeight - circleDiameter).rounded() / 2
             let bounds = CGRect(x: .zero, y: y, width: circleDiameter , height: circleDiameter)
             setAttachmentBehaviour(.zero, cornerRadius(shape: shapeType, _diameter: circleDiameter))
+            
             let textRange = NSRange(substringRange, in: text)
             setCircleLabelTextAttachment(text: text, label: label, bounds: bounds, range: textRange)
         } else {

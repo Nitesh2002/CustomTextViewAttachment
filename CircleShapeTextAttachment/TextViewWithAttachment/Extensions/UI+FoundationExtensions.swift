@@ -135,7 +135,7 @@ extension UIViewController {
 
 extension UIStoryboard {
     func instantiateVC<T: UIViewController>() -> T? {
-        if let name = NSStringFromClass(T.self).components(separatedBy: ".").last {
+        if let name = NSStringFromClass(T.self).components(separatedBy: Constants.dot).last {
             return instantiateViewController(withIdentifier: name) as? T
         }
         return nil
