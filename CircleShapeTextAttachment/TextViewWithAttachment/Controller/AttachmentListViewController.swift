@@ -69,6 +69,7 @@ extension AttachmentListViewController: UITableViewDelegate, UITableViewDataSour
         if shapeList.count > .zero {
             showActionSheet(title: Constants.actionSheetTitle, message: Constants.actionSheetOption, options: shapeList)
         } else {
+            selectedShpaeListItem = nil
             navigateToAttachment()
         }
     }

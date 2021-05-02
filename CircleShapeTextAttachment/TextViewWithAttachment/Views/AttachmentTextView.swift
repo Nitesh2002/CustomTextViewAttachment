@@ -35,7 +35,7 @@ class AttachmentTextView: UITextView {
         textContainer.lineFragmentPadding = .zero
     }
     
-    func setAttachmentBehaviour(_ padding: CGFloat, _ cornerRadius: CGFloat) {
+    func setAttachmentBehaviour(_ padding: CGFloat, _ cornerRadius: CGFloat? = nil) {
         self.attachmentBehavior.attachmentPadding = padding
         self.attachmentBehavior.attachmentCornerRadius = cornerRadius
         self.attachmentBehavior.textView = self

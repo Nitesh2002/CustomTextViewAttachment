@@ -47,7 +47,16 @@ class AttachmentCell: UITableViewCell {
         attachmentTapped?()
     }
     
-    func addTextAttachment(text: String, count:String, shape:Shape) {
+    func addCustomViewTextAttachment(text: String) {
+        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
+        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
+        titleTextView.setAttachmentBehaviour(10, nil)
+        titleTextView.setTextAttachment(text: text, view: attachmentButton, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline))
+        setUpCell(text: text)
+        
+    }
+    
+    func addShapedTextAttachment(text: String, count:String, shape:Shape) {
         
         if let range = text.range(of: count) {
             let replacingText = count + Constants.doubleWhiteSpace

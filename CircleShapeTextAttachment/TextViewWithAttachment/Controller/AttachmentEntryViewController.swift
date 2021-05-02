@@ -58,6 +58,7 @@ extension AttachmentEntryViewController {
         configureUI(view: validateButton)
         textView.text = Constants.defaultTextViewText
         attachmentTextField.text = Constants.defaultAttachmentText
+        attachmentTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, .zero, .zero)
         
     }
     

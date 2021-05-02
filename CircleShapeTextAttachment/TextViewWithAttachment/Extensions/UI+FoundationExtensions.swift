@@ -91,6 +91,25 @@ extension String {
         
         return mutableAttributedString
     }
+    
+    func customAttributedStringWithAttachment(view: UIView?, bounds: CGRect, font: UIFont) -> NSAttributedString {
+        
+        let mutableAttributedString = NSMutableAttributedString(string: Constants.empty)
+        let rightAttachment  = TextSubviewAttachment(view: view!, size: CGSize(width: bounds.width, height: bounds.height))
+        
+        rightAttachment.bounds = bounds
+        
+        let rightAttachmentStr = NSAttributedString(attachment: rightAttachment)
+        
+        mutableAttributedString.append(NSAttributedString(string: self))
+        mutableAttributedString.append(rightAttachmentStr)
+        mutableAttributedString.append(NSAttributedString(string: Constants.whiteSpace))
+        let range = NSRange(location: 0, length: mutableAttributedString.length - 1)
+        
+        mutableAttributedString.addAttributes([.font: font], range: range)
+        
+        return mutableAttributedString
+    }
 }
 extension UITextView {
     
@@ -103,6 +122,30 @@ extension UITextView {
         let attributedText = text.attributedStringWithAttachment(view: label, bounds: bounds, font: label.font, range: range)
         self.attributedText = attributedText
     }
+    
+    func setTextAttachment(text: String, view: UIView, bounds: CGRect, maxWidth: CGFloat = UIScreen.main.bounds.width - Constant.padding, font: UIFont = UIFont.systemFont(ofSize: 14)) {
+        let attributedText = text.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+        
+        if attributedText.size().width > maxWidth {
+            
+            guard let lastWord = text.components(separatedBy: Constants.whiteSpace).last else { return }
+            
+            let attributedLastWord = lastWord.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+            
+            if attributedLastWord.size().width < maxWidth {
+                
+                var fixedText = text
+                let newLineIndex = text.index(text.endIndex, offsetBy: -lastWord.count)
+                fixedText.insert(contentsOf: Constants.newLine, at: newLineIndex)
+                self.attributedText = fixedText.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+            } else {
+                self.attributedText = attributedText
+            }
+        } else {
+            self.attributedText = attributedText
+        }
+    }
+    
     
     func convertPointToTextContainer(_ point: CGPoint) -> CGPoint {
         let insets = self.textContainerInset

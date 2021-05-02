@@ -52,7 +52,9 @@ extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             if let item = shapeListItem {
-                cell.addTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
+                cell.addShapedTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
+            } else {
+                cell.addCustomViewTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText)
             }
             
             return  cell

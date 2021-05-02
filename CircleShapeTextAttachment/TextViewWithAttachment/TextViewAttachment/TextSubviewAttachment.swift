@@ -46,7 +46,7 @@ open class TextSubviewAttachment: NSTextAttachment {
 final internal class DirectTextAttachedViewProvider: TextAttachedViewProvider {
     
     let view: UIView
-    var makeCircular = true
+    
     init(view: UIView) {
         self.view = view
     }
