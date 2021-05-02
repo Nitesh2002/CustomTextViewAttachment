@@ -86,7 +86,7 @@ extension String {
         mutableAttributedString.append(NSAttributedString(string: self))
         mutableAttributedString.replaceCharacters(in: range, with: rightAttachmentStr)
         let nrange = NSRange(location: .zero, length: mutableAttributedString.length - 1)
-       
+        
         mutableAttributedString.addAttributes([.font: font], range: nrange)
         
         return mutableAttributedString
@@ -128,7 +128,28 @@ extension UITextView {
 extension UIViewController {
     func showAlert(alertText : String, alertMessage : String) {
         let alert = UIAlertController(title: alertText, message: alertMessage, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: Constants.alertOk, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+}
+
+extension UIStoryboard {
+    func instantiateVC<T: UIViewController>() -> T? {
+        if let name = NSStringFromClass(T.self).components(separatedBy: ".").last {
+            return instantiateViewController(withIdentifier: name) as? T
+        }
+        return nil
+    }
+}
+
+extension UILabel {
+    func size() -> CGSize {
+        var rect: CGRect = self.frame
+        rect.size = self.text?.size(withAttributes: [NSAttributedString.Key.font: self.font ?? 0]) ?? .zero
+        return rect.size
+    }
+}
+
+extension Int {
+    static let valueOne = 1
 }

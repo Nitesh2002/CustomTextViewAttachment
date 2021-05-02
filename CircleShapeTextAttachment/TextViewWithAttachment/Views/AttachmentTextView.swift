@@ -53,17 +53,27 @@ class AttachmentTextView: UITextView {
 
 extension AttachmentTextView {
     
-    func addCircleLabelTextAttachment(text: String, label: UILabel) {
+    func addShapeLabelTextAttachment(text: String, label: UILabel, shapeType: Shape) {
         if let substringRange = text.range(of: label.text ?? Constants.empty) {
             let labelSize = label.size()
-            let y = (label.font.xHeight - labelSize.height).rounded() / 2
-            let circleDiameter = labelSize.height > labelSize.width ? labelSize.height : labelSize.width
+            
+            let circleDiameter = max(labelSize.height, labelSize.width)
+            let y = (label.font.capHeight - circleDiameter).rounded() / 2
             let bounds = CGRect(x: .zero, y: y, width: circleDiameter , height: circleDiameter)
-            self.setAttachmentBehaviour(.zero, circleDiameter/2)
-            let nsRange = NSRange(substringRange, in: text)
-            self.setCircleLabelTextAttachment(text: text, label: label, bounds: bounds, range: nsRange)
+            setAttachmentBehaviour(.zero, cornerRadius(shape: shapeType, _diameter: circleDiameter))
+            let textRange = NSRange(substringRange, in: text)
+            setCircleLabelTextAttachment(text: text, label: label, bounds: bounds, range: textRange)
         } else {
             self.text = text
+        }
+    }
+    
+    private func cornerRadius(shape: Shape,_diameter: CGFloat) -> CGFloat {
+        switch shape {
+        case .circle:
+            return _diameter/2
+        case .square:
+            return Constants.squareCornerRadius
         }
     }
 }

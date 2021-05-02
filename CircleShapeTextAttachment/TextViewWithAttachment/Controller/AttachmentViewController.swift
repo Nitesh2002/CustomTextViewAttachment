@@ -7,9 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class AttachmentViewController: UIViewController {
     
     @IBOutlet weak private var tableView: UITableView!
+    
+    var shapeListItem: ShapeListItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class ViewController: UIViewController {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -48,21 +50,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.showAlert(alertText: Constants.alertTitle, alertMessage: "Tapped on text")
             }
             
-            cell.addTextAttachment(text: Constants.defaultTextViewText, count: "2")
+            if let item = shapeListItem {
+                cell.addTextAttachment(text: Constants.defaultTextViewText, count: "12", shape: item.type)
+            }
             
             return  cell
         }
         return UITableViewCell()
     }
-}
-
-enum Constants {
-    static let empty = ""
-    static let whiteSpace = " "
-    static let newLine = "\n"
-    static let paragraphSeparator = "\u{2029}"
-    static let defaultTextViewText = "There are 2 tasks you can take care of while you’re here today."
-    static let attachmentCell = "AttachmentCell"
-    static let estimatedRowHeight: CGFloat = 60
-    static let alertTitle = "TextViewAttachment"
 }
