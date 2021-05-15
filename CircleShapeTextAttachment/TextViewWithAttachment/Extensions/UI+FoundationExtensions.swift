@@ -92,7 +92,27 @@ extension String {
         return mutableAttributedString
     }
     
-    func customAttributedStringWithAttachment(view: UIView?, bounds: CGRect, font: UIFont) -> NSAttributedString {
+    func customAttributedStringWithAttachment(view: UIView?, bounds: CGRect, font: UIFont,range: NSRange) -> NSAttributedString {
+        
+        let mutableAttributedString = NSMutableAttributedString(string: Constants.empty)
+        let rightAttachment  = TextSubviewAttachment(view: view ?? UIView(), size: CGSize(width: bounds.width, height: bounds.height))
+        
+        rightAttachment.bounds = bounds
+        
+        let rightAttachmentStr = NSAttributedString(attachment: rightAttachment)
+        
+        mutableAttributedString.append(NSAttributedString(string: self))
+        mutableAttributedString.append(NSAttributedString(string: Constants.whiteSpace))
+        mutableAttributedString.insert(rightAttachmentStr, at: range.location)
+        
+        let nrange = NSRange(location: .zero, length: mutableAttributedString.length - 1)
+        
+        mutableAttributedString.addAttributes([.font: font], range: nrange)
+        
+        return mutableAttributedString
+    }
+    
+    func customAttributedStringWithAttachmentInEnd(view: UIView?, bounds: CGRect, font: UIFont) -> NSAttributedString {
         
         let mutableAttributedString = NSMutableAttributedString(string: Constants.empty)
         let rightAttachment  = TextSubviewAttachment(view: view!, size: CGSize(width: bounds.width, height: bounds.height))
@@ -123,21 +143,26 @@ extension UITextView {
         self.attributedText = attributedText
     }
     
-    func setTextAttachment(text: String, view: UIView, bounds: CGRect, maxWidth: CGFloat = UIScreen.main.bounds.width - Constant.padding, font: UIFont = UIFont.systemFont(ofSize: 14)) {
-        let attributedText = text.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+    func setTextAttachment(text: String, view: UIView, bounds: CGRect, font: UIFont = UIFont.systemFont(ofSize: 14), range: NSRange) {
+        let attributedText = text.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font, range: range)
+        self.attributedText = attributedText
+    }
+    
+    func setTextAttachmentInTheEnd(text: String, view: UIView, bounds: CGRect, maxWidth: CGFloat = UIScreen.main.bounds.width - Constant.padding, font: UIFont = UIFont.systemFont(ofSize: 14)) {
+        let attributedText = text.customAttributedStringWithAttachmentInEnd(view: view, bounds: bounds, font: font)
         
         if attributedText.size().width > maxWidth {
             
             guard let lastWord = text.components(separatedBy: Constants.whiteSpace).last else { return }
             
-            let attributedLastWord = lastWord.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+            let attributedLastWord = lastWord.customAttributedStringWithAttachmentInEnd(view: view, bounds: bounds, font: font)
             
             if attributedLastWord.size().width < maxWidth {
                 
                 var fixedText = text
                 let newLineIndex = text.index(text.endIndex, offsetBy: -lastWord.count)
                 fixedText.insert(contentsOf: Constants.newLine, at: newLineIndex)
-                self.attributedText = fixedText.customAttributedStringWithAttachment(view: view, bounds: bounds, font: font)
+                self.attributedText = fixedText.customAttributedStringWithAttachmentInEnd(view: view, bounds: bounds, font: font)
             } else {
                 self.attributedText = attributedText
             }
@@ -145,7 +170,6 @@ extension UITextView {
             self.attributedText = attributedText
         }
     }
-    
     
     func convertPointToTextContainer(_ point: CGPoint) -> CGPoint {
         let insets = self.textContainerInset

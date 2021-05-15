@@ -60,6 +60,8 @@ enum Constants {
     static let actionSheetCancel = "Cancel"
     static let actionSheetOption = "Please Select Shape"
     static let actionSheetTitle = "Attachment"
+    static let minRangeActionSheetTitle = "Min Range"
+    static let maxRangeActionSheetTitle = "Max Range"
     
     
     static let defaultTextViewText = "There are 12 tasks you can take care of while you’re here today."

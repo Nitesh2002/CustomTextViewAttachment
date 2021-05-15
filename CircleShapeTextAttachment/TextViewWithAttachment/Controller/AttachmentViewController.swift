@@ -13,9 +13,11 @@ class AttachmentViewController: UIViewController {
     
     var shapeListItem: ShapeListItem?
     var attachmentInfo: AttachmentInfo?
+    var attachmentRange: NSRange?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Attachment"
         configureTableView()
     }
     
@@ -54,7 +56,12 @@ extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
             if let item = shapeListItem {
                 cell.addShapedTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
             } else {
-                cell.addCustomViewTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText)
+                if let range = attachmentRange {
+                    cell.addCustomViewTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, range: range)
+                } else {
+                    cell.addCustomViewTextAttachmentAtEnd(text: attachmentInfo?.text ?? Constants.defaultTextViewText)
+                }
+                
             }
             
             return  cell

@@ -9,12 +9,10 @@ import UIKit
 
 class ListTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var containerView: UIStackView!
     @IBOutlet weak var attachmentTypeLabel: UILabel!
     
     func configureCell()  {
-        attachmentTypeLabel.adjustsFontForContentSizeCategory = true
         attachmentTypeLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        containerView.layoutIfNeeded()
+        attachmentTypeLabel.adjustsFontForContentSizeCategory = true
     }
 }

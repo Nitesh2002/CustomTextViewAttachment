@@ -8,8 +8,12 @@
 
 import UIKit
 
+protocol TextViewAttachmentDelegate: class {
+    func didTapTextView(isAttachmentTapped: Bool)
+}
+
 class AttachmentTextView: UITextView {
-    
+    weak var textViewDelegate: TextViewAttachmentDelegate?
     private let attachmentBehavior = TextViewSubviewAttachingBehavior()
     
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -33,6 +37,7 @@ class AttachmentTextView: UITextView {
         adjustsFontForContentSizeCategory = true
         textContainerInset = .zero
         textContainer.lineFragmentPadding = .zero
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
     }
     
     func setAttachmentBehaviour(_ padding: CGFloat, _ cornerRadius: CGFloat? = nil) {
@@ -48,6 +53,11 @@ class AttachmentTextView: UITextView {
             // Text container insets are used to convert coordinates between the text container and text view, so a change to these insets must trigger a layout update
             self.attachmentBehavior.layoutAttachedSubviews()
         }
+    }
+    
+    override func accessibilityActivate() -> Bool {
+        textViewDelegate?.didTapTextView(isAttachmentTapped: false)
+        return true
     }
 }
 
@@ -69,6 +79,20 @@ extension AttachmentTextView {
         }
     }
     
+    func addCustomViewTextAttachment(text: String, attachmentView: UIView, range: NSRange) {
+        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
+        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
+        setAttachmentBehaviour(0, nil)
+        setTextAttachment(text: text, view: attachmentView, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline), range: range)
+    }
+    
+    func addCustomViewTextAttachmentAtEnd(text: String, attachmentView: UIView) {
+        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
+        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
+        setAttachmentBehaviour(0, nil)
+        setTextAttachmentInTheEnd(text: text, view: attachmentView, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline))
+    }
+    
     private func cornerRadius(shape: Shape,_diameter: CGFloat) -> CGFloat {
         switch shape {
         case .circle:
@@ -76,5 +100,30 @@ extension AttachmentTextView {
         case .square:
             return Constants.squareCornerRadius
         }
+    }
+}
+
+extension AttachmentTextView {
+    @objc private func tapped(sender: UITapGestureRecognizer) {
+        
+        var location = sender.location(in: self)
+        location.x -= textContainerInset.left
+        location.y -= textContainerInset.top
+        
+        let characterIndex = layoutManager.characterIndex(for: location,
+                                                          in: textContainer,
+                                                          fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        if characterIndex < textStorage.length {
+            let attributeValue = attributedText.attribute(.attachment, at: characterIndex, effectiveRange: nil) as? NSTextAttachment
+            textViewDelegate?.didTapTextView(isAttachmentTapped: attributeValue != nil)
+        }
+    }
+}
+
+extension AttachmentTextView {
+    
+    private enum Constant {
+        static let height: CGFloat = 32
     }
 }

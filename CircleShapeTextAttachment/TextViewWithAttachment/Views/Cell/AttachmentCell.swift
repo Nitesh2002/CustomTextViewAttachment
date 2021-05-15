@@ -13,6 +13,7 @@ class AttachmentCell: UITableViewCell {
     private lazy var attachmentButton: UIButton = {
         
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "info"), for: .normal)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(attachmentButtonTapped), for: .touchUpInside)
@@ -20,13 +21,26 @@ class AttachmentCell: UITableViewCell {
         
     }()
     
+    private lazy var attachmentView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.addSubview(attachmentButton)
+        attachmentButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        attachmentButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(attachmentButtonTapped)))
+        return view
+    }()
+    
+    
+    
     private lazy var attachmentLabel: UILabel = {
         
         let label = UILabel()
         label.backgroundColor = .white
         label.adjustsFontForContentSizeCategory = true
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         label.textColor = containerView.backgroundColor
         label.textAlignment = .center
         return label
@@ -35,8 +49,8 @@ class AttachmentCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         titleTextView.backgroundColor = .clear
+        attachmentView.addSubview(attachmentButton)
     }
     
     @objc private func containerTapped() {
@@ -47,13 +61,15 @@ class AttachmentCell: UITableViewCell {
         attachmentTapped?()
     }
     
-    func addCustomViewTextAttachment(text: String) {
-        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
-        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
-        titleTextView.setAttachmentBehaviour(10, nil)
-        titleTextView.setTextAttachment(text: text, view: attachmentButton, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline))
+    func addCustomViewTextAttachment(text: String, range: NSRange) {
+        titleTextView.addCustomViewTextAttachment(text: text, attachmentView: attachmentView, range: range)
         setUpCell(text: text)
         
+    }
+    
+    func addCustomViewTextAttachmentAtEnd(text: String) {
+        titleTextView.addCustomViewTextAttachmentAtEnd(text: text, attachmentView: attachmentButton)
+        setUpCell(text: text)
     }
     
     func addShapedTextAttachment(text: String, count:String, shape:Shape) {
@@ -78,6 +94,7 @@ class AttachmentCell: UITableViewCell {
     private func setUpCell(text: String) {
         containerView.layoutIfNeeded()
         
+        titleTextView.textViewDelegate = self
         titleTextView.isAccessibilityElement = true
         titleTextView.font = UIFont.preferredFont(forTextStyle: .headline)
         titleTextView.adjustsFontForContentSizeCategory = true
@@ -93,12 +110,9 @@ class AttachmentCell: UITableViewCell {
     }
 }
 
-
-// MARK: - Constants
-
-extension AttachmentCell {
+extension AttachmentCell: TextViewAttachmentDelegate {
     
-    private enum Constant {
-        static let height: CGFloat = 48
+    func didTapTextView(isAttachmentTapped: Bool) {
+        isAttachmentTapped ? attachmentTapped?() :  textTapped?()
     }
 }

@@ -202,9 +202,9 @@
 		986A9F3225D28EB100A70781 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				986A9EC125D2870E00A70781 /* AttachmentViewController.swift */,
 				6D5D9CDC263D8B58005446A3 /* AttachmentListViewController.swift */,
 				6D6F2380263ECC1B0056CDA5 /* AttachmentEntryViewController.swift */,
+				986A9EC125D2870E00A70781 /* AttachmentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
