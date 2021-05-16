@@ -60,18 +60,25 @@ extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             if let item = shapeListItem {
-                cell.addShapedTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
+                configureShapedAttachment(cell: cell, item: item)
             } else {
-                if let range = attachmentRange {
-                    cell.addCustomViewTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, range: range)
-                } else {
-                    cell.addCustomViewTextAttachmentAtEnd(text: attachmentInfo?.text ?? Constants.defaultTextViewText)
-                }
-                
+                configureCustomViewAttachment(cell: cell)
             }
             
             return  cell
         }
         return UITableViewCell()
+    }
+    
+    private func configureShapedAttachment(cell:AttachmentCell, item:ShapeListItem) {
+        cell.addShapedTextAttachment(text: attachmentInfo?.text ?? Constants.defaultTextViewText, count: attachmentInfo?.attachmentText ?? Constants.defaultAttachmentText, shape: item.type)
+    }
+    
+    private func configureCustomViewAttachment(cell:AttachmentCell) {
+        if let range = attachmentRange {
+            cell.addCustomViewTextAttachment(text: attachmentInfo?.text ?? Constants.defaultCustomAttachmentTextViewText, range: range)
+        } else {
+            cell.addCustomViewTextAttachmentAtEnd(text: attachmentInfo?.text ?? Constants.defaultCustomAttachmentTextViewText)
+        }
     }
 }
