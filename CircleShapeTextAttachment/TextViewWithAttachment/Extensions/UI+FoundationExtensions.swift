@@ -17,6 +17,7 @@ extension UIView {
         }
     }
 }
+
 extension NSAttributedString {
     
     func insertingAttachment(_ attachment: NSTextAttachment, at index: Int, with paragraphStyle: NSParagraphStyle? = nil) -> NSAttributedString? {
@@ -218,5 +219,20 @@ extension UILabel {
 }
 
 extension Int {
+    static let valueHalf = 0.5
     static let valueOne = 1
+    static let valueTwo = 2
+    static let valueFour = 4
+    static let valueFive = 5
+}
+
+extension AppDelegate {
+    func hideBackButtonTitle()  {
+        let barButtonItemAppearance = UIBarButtonItem.appearance()
+        barButtonItemAppearance.setTitleTextAttributes([.foregroundColor: UIColor.clear], for: .normal)
+    }
+}
+
+extension UIColor {
+    static let primary: UIColor = .init(red: 0, green: 59/255, blue: 113/255, alpha: 1.0)
 }

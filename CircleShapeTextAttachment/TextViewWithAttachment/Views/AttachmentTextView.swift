@@ -26,7 +26,7 @@ class AttachmentTextView: UITextView {
         self.commonInit()
     }
     
-    private func commonInit(_ attachmenPadding: CGFloat = 5) {
+    private func commonInit(_ attachmenPadding: CGFloat = CGFloat(Int.valueFive)) {
         setUpDefaultAttributes()
     }
     
@@ -68,7 +68,7 @@ extension AttachmentTextView {
             let labelSize = label.size()
             
             let circleDiameter = max(labelSize.height, labelSize.width)
-            let y = (label.font.capHeight - circleDiameter).rounded() / 2
+            let y = (label.font.capHeight - circleDiameter).rounded() / CGFloat(Int.valueTwo)
             let bounds = CGRect(x: .zero, y: y, width: circleDiameter , height: circleDiameter)
             setAttachmentBehaviour(.zero, cornerRadius(shape: shapeType, _diameter: circleDiameter))
             
@@ -80,23 +80,23 @@ extension AttachmentTextView {
     }
     
     func addCustomViewTextAttachment(text: String, attachmentView: UIView, range: NSRange) {
-        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
-        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
-        setAttachmentBehaviour(0, nil)
+        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / CGFloat(Int.valueTwo)
+        let bounds = CGRect(x: .zero, y: y, width: Constant.height, height: Constant.height)
+        setAttachmentBehaviour(.zero, nil)
         setTextAttachment(text: text, view: attachmentView, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline), range: range)
     }
     
     func addCustomViewTextAttachmentAtEnd(text: String, attachmentView: UIView) {
-        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / 2
-        let bounds = CGRect(x: 0, y: y, width: Constant.height, height: Constant.height)
-        setAttachmentBehaviour(0, nil)
+        let y = (UIFont.preferredFont(forTextStyle: .headline).xHeight   - Constant.height).rounded() / CGFloat(Int.valueTwo)
+        let bounds = CGRect(x: .zero, y: y, width: Constant.height, height: Constant.height)
+        setAttachmentBehaviour(.zero, nil)
         setTextAttachmentInTheEnd(text: text, view: attachmentView, bounds: bounds,font: UIFont.preferredFont(forTextStyle: .headline))
     }
     
     private func cornerRadius(shape: Shape,_diameter: CGFloat) -> CGFloat {
         switch shape {
         case .circle:
-            return _diameter/2
+            return _diameter/CGFloat(Int.valueTwo)
         case .square:
             return Constants.squareCornerRadius
         }

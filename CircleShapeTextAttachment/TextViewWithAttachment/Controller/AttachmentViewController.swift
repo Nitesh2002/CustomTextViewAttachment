@@ -15,13 +15,17 @@ class AttachmentViewController: UIViewController {
     var attachmentInfo: AttachmentInfo?
     var attachmentRange: NSRange?
     
+    // MARK: - View LifeCycle function(s)
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        self.title = "Attachment"
+        self.title = ScreenTitle.View.GetTitle()
         configureTableView()
     }
     
     private func configureTableView() {
+        
         tableView.register(UINib(nibName: Constants.attachmentCell, bundle: nil), forCellReuseIdentifier: Constants.attachmentCell)
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -35,11 +39,13 @@ class AttachmentViewController: UIViewController {
 extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        return Int.valueOne
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        
+        return Int.valueOne
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,10 +53,10 @@ extension AttachmentViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.attachmentCell, for: indexPath) as? AttachmentCell {
             
             cell.attachmentTapped = { [weak self] in
-                self?.showAlert(alertText: Constants.alertTitle, alertMessage: "Tapped on image/attachment")
+                self?.showAlert(alertText: Constants.alertTitle, alertMessage: Constants.tappedOnAttachmentMessage)
             }
             cell.textTapped = { [weak self] in
-                self?.showAlert(alertText: Constants.alertTitle, alertMessage: "Tapped on text")
+                self?.showAlert(alertText: Constants.alertTitle, alertMessage: Constants.tappedOnTextMessage)
             }
             
             if let item = shapeListItem {

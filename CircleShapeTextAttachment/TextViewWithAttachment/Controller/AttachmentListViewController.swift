@@ -14,18 +14,25 @@ class AttachmentListViewController: UIViewController {
     private(set) var rows = AttachmentList().rows
     private(set) var selectedShpaeListItem: ShapeListItem?
     
+    // MARK: - View LifeCycle function(s)
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        self.title = "Attachment List"
+        self.title = ScreenTitle.List.GetTitle()
         configureTableView()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
         super.traitCollectionDidChange(previousTraitCollection)
         handleLayoutChange()
     }
     
+    // MARK: - UI Handler function(s)
+    
     private func handleLayoutChange() {
+        
         UIView.performWithoutAnimation {
             self.view.layoutIfNeeded()
             self.tableView.reloadData()
@@ -34,6 +41,7 @@ class AttachmentListViewController: UIViewController {
     }
     
     private func configureTableView() {
+        
         tableView.register(UINib(nibName: Constants.attachmentCell, bundle: nil), forCellReuseIdentifier: Constants.attachmentCell)
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -48,10 +56,12 @@ class AttachmentListViewController: UIViewController {
 extension AttachmentListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return Int.valueOne
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return rows.count
     }
     
@@ -66,6 +76,7 @@ extension AttachmentListViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let shapeList = rows[indexPath.row].shapeList
         if shapeList.count > .zero {
             showActionSheet(title: Constants.actionSheetTitle, message: Constants.actionSheetOption, options: shapeList)
@@ -76,8 +87,12 @@ extension AttachmentListViewController: UITableViewDelegate, UITableViewDataSour
     }
 }
 
+// MARK: - Navigation function(s)
+
 extension AttachmentListViewController {
+    
     private func navigateToAttachment(_ item: ShapeListItem? = nil) {
+        
         guard let attachmentVC: AttachmentEntryViewController = storyboard?.instantiateVC() else {
             preconditionFailure(Constants.controlleDidNotFound)
         }
@@ -90,7 +105,10 @@ extension AttachmentListViewController {
     }
 }
 
+// MARK: - ActionSheet function(s)
+
 extension AttachmentListViewController {
+    
     func showActionSheet(title: String, message: String, options: [ShapeListItem])  {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)

@@ -43,6 +43,23 @@ enum ShapeName: String {
     case Square = "Square/Rectangle"
 }
 
+enum ScreenTitle: String {
+    case List
+    case Entry
+    case View
+    
+    func GetTitle() -> String {
+        switch self {
+        case .List:
+            return "Attachment List"
+        case .Entry:
+            return "Attachment Entry"
+        case .View:
+            return "Attachment"
+        }
+    }
+}
+
 enum Constants {
     static let empty = ""
     static let whiteSpace = " "
@@ -56,6 +73,8 @@ enum Constants {
     
     static let alertTitle = "TextViewAttachment"
     static let alertOk = "OK"
+    static let tappedOnAttachmentMessage = "Tapped on Attachment"
+    static let tappedOnTextMessage = "Tapped on TextView's text"
     
     static let actionSheetCancel = "Cancel"
     static let actionSheetOption = "Please Select Shape"
@@ -65,7 +84,13 @@ enum Constants {
     
     
     static let defaultTextViewText = "There are 12 tasks you can take care of while you’re here today."
+    static let defaultCustomAttachmentTextViewText = "This is the text attachment with custom UIView Component."
     static let defaultAttachmentText = "12"
+    static let validRangeMessage = "Please select valid range"
+    static let emptyMessage = "Please enter the attachment text."
+    static let attachmentMismatchMessage = "Attachment text you entered does not belongs to the full text."
+    
+    
     
     static let customeViewAttachment =  "Custom View Attachment"
     static let shapeAttachment = "Shaped Attachment"
@@ -74,4 +99,6 @@ enum Constants {
     static let attachmentCell = "AttachmentCell"
     
     static let controlleDidNotFound = "Controller did not found"
+    
+    static let infoImage = "info"
 }
